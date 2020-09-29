@@ -55,6 +55,7 @@ $(document).ready(function () {
   }
 
   function createCard(cardData) {
+    console.log(cardData);
     let starState = "";
     let starString = "";
     let star;
@@ -96,7 +97,7 @@ $(document).ready(function () {
             width="30px"
             class="rounded-circle"
           />
-          <h6 class="pl-3 m-0 main-color">Phillip Massey</h6>
+          <h6 class="pl-3 m-0 main-color">${cardData.author}</h6>
         </div>
         <div class="info pt-3 d-flex justify-content-between">
           <div class="rating">
