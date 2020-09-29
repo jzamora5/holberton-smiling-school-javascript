@@ -120,7 +120,7 @@ $(document).ready(function () {
       let card = createCard(data[i]);
       let $carouselItem = $(`
       <div class="${classItem}">
-        <div class="col-3">
+        <div class="col-12 col-sm-6 col-lg-3 d-flex justify-content-center">
           ${card}
           </div>
       </div>

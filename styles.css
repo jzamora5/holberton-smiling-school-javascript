@@ -257,6 +257,7 @@
   }
   .quotes {
     height: auto;
+    min-height: 200px;
   }
   .quotes .carousel-item img {
     margin: 90px auto 0 auto;
@@ -293,6 +294,12 @@
   padding-top: 87px;
   padding-bottom: 75px;
   color: var(--background-color);
+}
+
+.popular .carousel-inner {
+  min-height: 200px;
+  display: flex;
+  align-items: center;
 }
 
 .section .card {
@@ -925,6 +932,8 @@
   }
 }
 
+/* MOVE 1 SLIDE CAROUSEL ======================================================== */
+
 @media (max-width: 768px) {
   #popular .carousel-inner .carousel-item > div {
     display: none;
@@ -940,8 +949,8 @@
   display: flex;
 }
 
-/* display 3 */
-@media (min-width: 768px) {
+/* display 4 */
+@media (min-width: 992px) {
   #popular .carousel-inner .carousel-item-right.active,
   #popular .carousel-inner .carousel-item-next {
     transform: translateX(25%);
@@ -950,6 +959,30 @@
   #popular .carousel-inner .carousel-item-left.active,
   #popular .carousel-inner .carousel-item-prev {
     transform: translateX(-25%);
+  }
+}
+
+@media (min-width: 576px) and (max-width: 991px) {
+  #popular .carousel-inner .carousel-item-right.active,
+  #popular .carousel-inner .carousel-item-next {
+    transform: translateX(50%);
+  }
+
+  #popular .carousel-inner .carousel-item-left.active,
+  #popular .carousel-inner .carousel-item-prev {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 575px) {
+  #popular .carousel-inner .carousel-item-right.active,
+  #popular .carousel-inner .carousel-item-next {
+    transform: translateX(100%);
+  }
+
+  #popular .carousel-inner .carousel-item-left.active,
+  #popular .carousel-inner .carousel-item-prev {
+    transform: translateX(-100%);
   }
 }
 
