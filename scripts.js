@@ -2,42 +2,6 @@ $(document).ready(function () {
   //   Quotes ===============================================================
 
   function displayQuotes(data) {
-    let $carousel = $(`
-            <div
-            id="carouselExampleControls"
-            class="carousel slide"
-            data-ride="carousel"
-        >
-            <div class="carousel-inner" id="carousel-items"></div>
-            <a
-            class="carousel-control-prev arrow-left"
-            href="#carouselExampleControls"
-            role="button"
-            data-slide="prev"
-            >
-            <img
-                src="images/arrow_white_left.png"
-                alt="Quote Previous"
-                aria-hidden="true"
-            />
-            <span class="sr-only">Previous</span>
-            </a>
-            <a
-            class="carousel-control-next arrow-right"
-            href="#carouselExampleControls"
-            role="button"
-            data-slide="next"
-            >
-            <img
-                src="images/arrow_white_right.png"
-                alt="Quote Next"
-                aria-hidden="true"
-            />
-            <span class="sr-only">Next</span>
-            </a>
-        </div>
-    `);
-    $("#carousel").append($carousel);
     let classItem = "";
     for (let i in data) {
       classItem = i == 0 ? "carousel-item active" : "carousel-item";
@@ -48,7 +12,7 @@ $(document).ready(function () {
             <img
                 src="${data[i].pic_url}"
                 class="d-block align-self-center"
-                alt="Carousel Pic 1"
+                alt="Carousel Pic ${i}"
             />
             </div>
             <div class="col-12 col-sm-7 offset-sm-2 col-lg-9 offset-lg-0">
@@ -70,9 +34,107 @@ $(document).ready(function () {
     // END OF displayQuotes
   }
 
+  function slideOne(id) {
+    $(`#${id} .carousel-item`).each(function () {
+      let minPerSlide = 4;
+      let next = $(this).next();
+      if (!next.length) {
+        next = $(this).siblings(":first");
+      }
+      next.children(":first-child").clone().appendTo($(this));
+
+      for (let i = 0; i < minPerSlide; i++) {
+        next = next.next();
+        if (!next.length) {
+          next = $(this).siblings(":first");
+        }
+
+        next.children(":first-child").clone().appendTo($(this));
+      }
+    });
+  }
+
+  function createCard(cardData) {
+    let starState = "";
+    let starString = "";
+    let star;
+    for (let i = 1; i <= 5; i++) {
+      if (i <= cardData.star) {
+        starState = "images/star_on.png";
+      } else {
+        starState = "images/star_off.png";
+      }
+
+      star = `<img src="${starState}" alt="star on" width="15px" />`;
+      starString += i == 1 ? star : "\n" + star;
+    }
+
+    let card = `
+    <div class="card">
+      <img
+        src="${cardData.thumb_url}"
+        class="card-img-top"
+        alt="Video thumbnail"
+      />
+      <div class="card-img-overlay text-center">
+        <img
+          src="images/play.png"
+          alt="Play"
+          width="64px"
+          class="align-self-center play-overlay"
+        />
+      </div>
+      <div class="card-body">
+        <h5 class="card-title font-weight-bold">${cardData.title}</h5>
+        <p class="card-text text-muted">
+            ${cardData["sub-title"]}
+        </p>
+        <div class="creator d-flex align-items-center">
+          <img
+            src="${cardData.author_pic_url}"
+            alt="Creator of Video"
+            width="30px"
+            class="rounded-circle"
+          />
+          <h6 class="pl-3 m-0 main-color">Phillip Massey</h6>
+        </div>
+        <div class="info pt-3 d-flex justify-content-between">
+          <div class="rating">
+            ${starString}
+          </div>
+          <span class="main-color">${cardData.duration}</span>
+        </div>
+      </div>
+    </div>
+    `;
+
+    return card;
+
+    // END OF createCard
+  }
+
+  function displayPopular(data) {
+    let classItem = "";
+    for (let i in data) {
+      classItem = i == 0 ? "carousel-item active" : "carousel-item";
+      let card = createCard(data[i]);
+      let $carouselItem = $(`
+      <div class="${classItem}">
+        <div class="col-3">
+          ${card}
+          </div>
+      </div>
+          `);
+      $("#popular-items").append($carouselItem);
+    }
+
+    slideOne("popular");
+    // END OF displayPopular
+  }
+
   function displayLoader(active, id) {
     if (active) {
-      let $loader = $(`<div class="loader my-5" id="loader-${id}"></div>`);
+      let $loader = $(`<div class="loader" id="loader-${id}"></div>`);
       $(`#${id}`).append($loader);
     } else {
       let $loader = $(`#loader-${id}`);
@@ -102,7 +164,18 @@ $(document).ready(function () {
   requestData(
     "https://smileschool-api.hbtn.info/quotes",
     displayQuotes,
-    "carousel"
+    "carousel-items"
   );
+
+  requestData(
+    "https://smileschool-api.hbtn.info/popular-tutorials",
+    displayPopular,
+    "popular-items"
+  );
+
+  $("#popularCarousel").carousel({
+    interval: 10000,
+  });
+
   //   END OF DOCUMENT READY
 });

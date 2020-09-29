@@ -924,3 +924,36 @@
     transform: rotate(360deg);
   }
 }
+
+@media (max-width: 768px) {
+  #popular .carousel-inner .carousel-item > div {
+    display: none;
+  }
+  #popular .carousel-inner .carousel-item > div:first-child {
+    display: block;
+  }
+}
+
+#popular .carousel-inner .carousel-item.active,
+#popular .carousel-inner .carousel-item-next,
+#popular .carousel-inner .carousel-item-prev {
+  display: flex;
+}
+
+/* display 3 */
+@media (min-width: 768px) {
+  #popular .carousel-inner .carousel-item-right.active,
+  #popular .carousel-inner .carousel-item-next {
+    transform: translateX(25%);
+  }
+
+  #popular .carousel-inner .carousel-item-left.active,
+  #popular .carousel-inner .carousel-item-prev {
+    transform: translateX(-25%);
+  }
+}
+
+#popular .carousel-inner .carousel-item-right,
+#popular .carousel-inner .carousel-item-left {
+  transform: translateX(0);
+}
