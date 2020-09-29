@@ -935,58 +935,77 @@
 /* MOVE 1 SLIDE CAROUSEL ======================================================== */
 
 @media (max-width: 768px) {
-  #popular .carousel-inner .carousel-item > div {
+  #popular .carousel-inner .carousel-item > div,
+  #latest-videos .carousel-inner .carousel-item > div {
     display: none;
   }
-  #popular .carousel-inner .carousel-item > div:first-child {
+  #popular .carousel-inner .carousel-item > div:first-child,
+  #latest-videos .carousel-inner .carousel-item > div:first-child {
     display: block;
   }
 }
 
 #popular .carousel-inner .carousel-item.active,
 #popular .carousel-inner .carousel-item-next,
-#popular .carousel-inner .carousel-item-prev {
+#popular .carousel-inner .carousel-item-prev,
+#latest-videos .carousel-inner .carousel-item.active,
+#latest-videos .carousel-inner .carousel-item-next,
+#latest-videos .carousel-inner .carousel-item-prev {
   display: flex;
 }
 
 /* display 4 */
 @media (min-width: 992px) {
   #popular .carousel-inner .carousel-item-right.active,
-  #popular .carousel-inner .carousel-item-next {
+  #popular .carousel-inner .carousel-item-next,
+  #latest-videos .carousel-inner .carousel-item-right.active,
+  #latest-videos .carousel-inner .carousel-item-next {
     transform: translateX(25%);
   }
 
   #popular .carousel-inner .carousel-item-left.active,
-  #popular .carousel-inner .carousel-item-prev {
+  #popular .carousel-inner .carousel-item-prev,
+  #latest-videos .carousel-inner .carousel-item-left.active,
+  #latest-videos .carousel-inner .carousel-item-prev {
     transform: translateX(-25%);
   }
 }
 
 @media (min-width: 576px) and (max-width: 991px) {
   #popular .carousel-inner .carousel-item-right.active,
-  #popular .carousel-inner .carousel-item-next {
+  #popular .carousel-inner .carousel-item-next,
+  #latest-videos .carousel-inner .carousel-item-right.active,
+  #latest-videos .carousel-inner .carousel-item-next {
     transform: translateX(50%);
   }
 
   #popular .carousel-inner .carousel-item-left.active,
-  #popular .carousel-inner .carousel-item-prev {
+  #popular .carousel-inner .carousel-item-prev,
+  #latest-videos .carousel-inner .carousel-item-left.active,
+  #latest-videos .carousel-inner .carousel-item-prev {
     transform: translateX(-50%);
   }
 }
 
 @media (max-width: 575px) {
   #popular .carousel-inner .carousel-item-right.active,
-  #popular .carousel-inner .carousel-item-next {
+  #popular .carousel-inner .carousel-item-next,
+  #latest-videos .carousel-inner .carousel-item-right.active,
+  #latest-videos .carousel-inner .carousel-item-next {
     transform: translateX(100%);
   }
 
   #popular .carousel-inner .carousel-item-left.active,
-  #popular .carousel-inner .carousel-item-prev {
+  #popular .carousel-inner .carousel-item-prev,
+  #latest-videos .carousel-inner .carousel-item-left.active,
+  #latest-videos .carousel-inner .carousel-item-prev {
     transform: translateX(-100%);
   }
 }
 
 #popular .carousel-inner .carousel-item-right,
-#popular .carousel-inner .carousel-item-left {
+#popular .carousel-inner .carousel-item-left,
+#latest-videos .carousel-inner .carousel-item-right,
+#latest-videos .carousel-inner .carousel-item-left {
   transform: translateX(0);
 }

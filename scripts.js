@@ -55,7 +55,6 @@ $(document).ready(function () {
   }
 
   function createCard(cardData) {
-    console.log(cardData);
     let starState = "";
     let starString = "";
     let star;
@@ -133,6 +132,25 @@ $(document).ready(function () {
     // END OF displayPopular
   }
 
+  function displayLatest(data) {
+    let classItem = "";
+    for (let i in data) {
+      classItem = i == 0 ? "carousel-item active" : "carousel-item";
+      let card = createCard(data[i]);
+      let $carouselItem = $(`
+      <div class="${classItem}">
+        <div class="col-12 col-sm-6 col-lg-3 d-flex justify-content-center">
+          ${card}
+          </div>
+      </div>
+          `);
+      $("#latest-videos-items").append($carouselItem);
+    }
+
+    slideOne("latest-videos");
+    // END OF displayLatest
+  }
+
   function displayLoader(active, id) {
     if (active) {
       let $loader = $(`<div class="loader" id="loader-${id}"></div>`);
@@ -162,21 +180,29 @@ $(document).ready(function () {
     // END OF requestData
   }
 
-  requestData(
-    "https://smileschool-api.hbtn.info/quotes",
-    displayQuotes,
-    "carousel-items"
-  );
+  // PERFORM DYNAMIC CONTENT REQUESTS ===================================
+  let requests = [
+    {
+      url: "https://smileschool-api.hbtn.info/quotes",
+      func: displayQuotes,
+      id: "carousel-items",
+    },
+    {
+      url: "https://smileschool-api.hbtn.info/popular-tutorials",
+      func: displayPopular,
+      id: "popular-items",
+    },
+    {
+      url: "https://smileschool-api.hbtn.info/latest-videos",
+      func: displayLatest,
+      id: "latest-videos-items",
+    },
+  ];
 
-  requestData(
-    "https://smileschool-api.hbtn.info/popular-tutorials",
-    displayPopular,
-    "popular-items"
-  );
-
-  $("#popularCarousel").carousel({
-    interval: 10000,
-  });
+  for (r of requests) {
+    requestData(r.url, r.func, r.id);
+  }
+  // ======================================================================
 
   //   END OF DOCUMENT READY
 });
