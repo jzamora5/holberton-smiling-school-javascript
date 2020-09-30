@@ -1,6 +1,5 @@
 $(document).ready(function () {
   //   Quotes ===============================================================
-
   function displayQuotes(data) {
     let classItem = "";
     for (let i in data) {
@@ -151,6 +150,90 @@ $(document).ready(function () {
     // END OF displayLatest
   }
 
+  function searchObject() {
+    let searchObj = {
+      q: $("#keywords-input").val(),
+      topic: $("#topic").text().toLowerCase(),
+      sort: $("#sort-by").text().toLowerCase().replace(" ", "_"),
+    };
+
+    return searchObj;
+  }
+
+  function searchRequest() {
+    let searchObj = searchObject();
+    let $results = $("#results-items");
+    $results.empty();
+    $("#results-count").text("");
+
+    for (let r of requestsCourses) {
+      requestData(r.url, displayResults, r.id, searchObj);
+    }
+  }
+
+  function displayDropdown(list, $DOMElement, $titleElement) {
+    if (list.length) {
+      for (let l of list) {
+        let s = l.charAt(0).toUpperCase() + l.slice(1);
+        s = s.replace("_", " ");
+        let $item = $(`
+          <a class="dropdown-item" href="#">${s}</a>
+        `);
+        $item.click(function () {
+          $titleElement.text(s);
+          searchRequest();
+        });
+        $DOMElement.append($item);
+      }
+    }
+  }
+
+  function displaySearch(data) {
+    let topics = data.topics;
+    let sorts = data.sorts;
+
+    let $TopicDropdown = $("#topic-dropdown");
+    let $TopicTitle = $("#topic");
+    displayDropdown(topics, $TopicDropdown, $TopicTitle);
+
+    let $SortDropdown = $("#sort-dropdown");
+    let $SortTitle = $("#sort-by");
+    displayDropdown(sorts, $SortDropdown, $SortTitle);
+
+    let $KeywordsInput = $("#keywords-input");
+
+    $KeywordsInput.change(function () {
+      searchRequest();
+    });
+  }
+
+  function displayResults(data) {
+    let courses = data.courses;
+    if (!courses) return;
+    let $results = $("#results-items");
+
+    let count = Object.keys(courses).length;
+    $("#results-count").text(`${count} videos`);
+
+    if (Object.keys(courses).length) {
+      for (let c of courses) {
+        let card = createCard(c);
+        let $resultItem = $(`
+      <div class="col-12 col-sm-4 col-lg-3 d-flex justify-content-center">
+        ${card}
+      </div>
+     `);
+        $results.append($resultItem);
+      }
+    }
+  }
+
+  function displaySearchAndResults(data) {
+    displayResults(data);
+    displaySearch(data);
+    // END OF displayResults
+  }
+
   function displayLoader(active, id) {
     if (active) {
       let $loader = $(`<div class="loader" id="loader-${id}"></div>`);
@@ -163,18 +246,19 @@ $(document).ready(function () {
     // END OF displayLoader
   }
 
-  function requestData(url, callback, id) {
+  function requestData(url, callback, id, data = {}) {
     displayLoader(true, id);
     $.ajax({
       url: url,
       type: "GET",
+      data: data,
       headers: { "Content-Type": "application/json" },
       success: function (response) {
         displayLoader(false, id);
         callback(response);
       },
       error: function (error) {
-        alert("Error sending Getting Data");
+        alert(`Error Getting Data from ${url}`);
       },
     });
     // END OF requestData
@@ -209,9 +293,9 @@ $(document).ready(function () {
 
   let requestsCourses = [
     {
-      url: "https://smileschool-api.hbtn.info/quotes",
-      func: displayQuotes,
-      id: "carousel-items",
+      url: "https://smileschool-api.hbtn.info/courses",
+      func: displaySearchAndResults,
+      id: "results-items",
     },
   ];
 
@@ -225,7 +309,7 @@ $(document).ready(function () {
   else if (Object.keys($pricing).length) requestObject = requestsHomepage;
   else if (Object.keys($courses).length) requestObject = requestsCourses;
 
-  for (r of requestObject) {
+  for (let r of requestObject) {
     requestData(r.url, r.func, r.id);
   }
 
