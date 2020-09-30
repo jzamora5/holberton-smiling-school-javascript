@@ -181,7 +181,7 @@ $(document).ready(function () {
   }
 
   // PERFORM DYNAMIC CONTENT REQUESTS ===================================
-  let requests = [
+  let requestsHomepage = [
     {
       url: "https://smileschool-api.hbtn.info/quotes",
       func: displayQuotes,
@@ -199,9 +199,36 @@ $(document).ready(function () {
     },
   ];
 
-  for (r of requests) {
+  let requestsPricing = [
+    {
+      url: "https://smileschool-api.hbtn.info/quotes",
+      func: displayQuotes,
+      id: "carousel-items",
+    },
+  ];
+
+  let requestsCourses = [
+    {
+      url: "https://smileschool-api.hbtn.info/quotes",
+      func: displayQuotes,
+      id: "carousel-items",
+    },
+  ];
+
+  let $homepage = $("#homepage");
+  let $pricing = $("#pricing");
+  let $courses = $("#courses");
+
+  let requestObject;
+
+  if (Object.keys($homepage).length) requestObject = requestsHomepage;
+  else if (Object.keys($pricing).length) requestObject = requestsHomepage;
+  else if (Object.keys($courses).length) requestObject = requestsCourses;
+
+  for (r of requestObject) {
     requestData(r.url, r.func, r.id);
   }
+
   // ======================================================================
 
   //   END OF DOCUMENT READY
