@@ -2,23 +2,42 @@ $(document).ready(function () {
   // XML TO OBJECT LIST =====================================================
   function XMLtoObjList(xml, key) {
     let list = [];
+    let dic = {};
 
     XMLElement = $(xml).find(key);
 
     for (let i = 0; i < XMLElement.length; i++) {
-      let children = $(XMLElement[i]).children();
       let obj = {};
 
-      if (key == "video") {
+      if (key == "video" || key === "course") {
         obj["star"] = $(XMLElement[i]).attr("star");
       }
 
-      for (let j = 0; j < children.length; j++) {
-        let tagName = $(children[j]).prop("tagName");
-        obj[tagName] = $(children[j]).text();
+      if (key === "topic" || key === "sort") {
+        // =====================
+        let txt = $(XMLElement[i]).text().toLowerCase();
+
+        if (dic[txt]) {
+          continue;
+        } else {
+          dic[txt] = txt;
+          obj = dic[txt];
+        }
+
+        // =====================
+      } else {
+        // =====================
+        let children = $(XMLElement[i]).children();
+        for (let j = 0; j < children.length; j++) {
+          let tagName = $(children[j]).prop("tagName");
+          obj[tagName] = $(children[j]).text();
+        }
+        // =====================
       }
+
       list.push(obj);
     }
+
     return list;
   }
 
@@ -215,8 +234,8 @@ $(document).ready(function () {
   }
 
   function displaySearch(data) {
-    let topics = data.topics;
-    let sorts = data.sorts;
+    let topics = XMLtoObjList(data, "topic");
+    let sorts = XMLtoObjList(data, "sort");
 
     let $TopicDropdown = $("#topic-dropdown");
     let $TopicTitle = $("#topic");
@@ -234,7 +253,7 @@ $(document).ready(function () {
   }
 
   function displayResults(data) {
-    let courses = data.courses;
+    let courses = XMLtoObjList(data, "course");
     if (!courses) return;
     let $results = $("#results-items");
 
@@ -257,6 +276,7 @@ $(document).ready(function () {
   function displaySearchAndResults(data) {
     displayResults(data);
     displaySearch(data);
+
     // END OF displayResults
   }
 
@@ -279,7 +299,7 @@ $(document).ready(function () {
       url: url,
       type: "GET",
       data: data,
-      headers: { "Content-Type": "application/xml" },
+      dataType: "xml",
       success: function (response) {
         displayLoader(false, id);
         callback(response);
@@ -333,7 +353,7 @@ $(document).ready(function () {
   let requestObject;
 
   if (Object.keys($homepage).length) requestObject = requestsHomepage;
-  else if (Object.keys($pricing).length) requestObject = requestsHomepage;
+  else if (Object.keys($pricing).length) requestObject = requestsPricing;
   else if (Object.keys($courses).length) requestObject = requestsCourses;
 
   for (let r of requestObject) {
