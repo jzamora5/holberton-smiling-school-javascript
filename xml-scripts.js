@@ -268,6 +268,8 @@ $(document).ready(function () {
 
     let $KeywordsInput = $("#keywords-input");
 
+    $KeywordsInput.val($(data).find("q").text());
+
     $KeywordsInput.change(function () {
       searchRequest();
     });

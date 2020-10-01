@@ -213,6 +213,8 @@ $(document).ready(function () {
 
     let $KeywordsInput = $("#keywords-input");
 
+    $KeywordsInput.val(data.q);
+
     $KeywordsInput.change(function () {
       searchRequest();
     });
@@ -240,7 +242,6 @@ $(document).ready(function () {
   }
 
   function displaySearchAndResults(data) {
-    console.log(data);
     displayResults(data);
     displaySearch(data);
     // END OF displayResults
