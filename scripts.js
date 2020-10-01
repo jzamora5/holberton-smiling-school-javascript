@@ -171,11 +171,17 @@ $(document).ready(function () {
     }
   }
 
+  function parseTitle(title) {
+    if (title) {
+      title = title.charAt(0).toUpperCase() + title.slice(1).replace("_", " ");
+    }
+    return title;
+  }
+
   function displayDropdown(list, $DOMElement, $titleElement) {
     if (list.length) {
       for (let l of list) {
-        let s = l.charAt(0).toUpperCase() + l.slice(1);
-        s = s.replace("_", " ");
+        let s = parseTitle(l);
         let $item = $(`
           <a class="dropdown-item" href="#">${s}</a>
         `);
@@ -189,15 +195,20 @@ $(document).ready(function () {
   }
 
   function displaySearch(data) {
+    let title;
     let topics = data.topics;
     let sorts = data.sorts;
 
     let $TopicDropdown = $("#topic-dropdown");
     let $TopicTitle = $("#topic");
+    title = parseTitle(data.topic);
+    $TopicTitle.text(title);
     displayDropdown(topics, $TopicDropdown, $TopicTitle);
 
     let $SortDropdown = $("#sort-dropdown");
     let $SortTitle = $("#sort-by");
+    title = parseTitle(data.sort);
+    $SortTitle.text(title);
     displayDropdown(sorts, $SortDropdown, $SortTitle);
 
     let $KeywordsInput = $("#keywords-input");
@@ -229,6 +240,7 @@ $(document).ready(function () {
   }
 
   function displaySearchAndResults(data) {
+    console.log(data);
     displayResults(data);
     displaySearch(data);
     // END OF displayResults

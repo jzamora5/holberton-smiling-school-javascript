@@ -216,11 +216,17 @@ $(document).ready(function () {
     }
   }
 
+  function parseTitle(title) {
+    if (title) {
+      title = title.charAt(0).toUpperCase() + title.slice(1).replace("_", " ");
+    }
+    return title;
+  }
+
   function displayDropdown(list, $DOMElement, $titleElement) {
     if (list.length) {
       for (let l of list) {
-        let s = l.charAt(0).toUpperCase() + l.slice(1);
-        s = s.replace("_", " ");
+        let s = parseTitle(l);
         let $item = $(`
           <a class="dropdown-item" href="#">${s}</a>
         `);
@@ -233,16 +239,31 @@ $(document).ready(function () {
     }
   }
 
+  function cleanXML(data) {
+    $(data).find("topics").remove();
+    $(data).find("sorts").remove();
+    $(data).find("courses").remove();
+
+    return data;
+  }
+
   function displaySearch(data) {
+    let title;
     let topics = XMLtoObjList(data, "topic");
     let sorts = XMLtoObjList(data, "sort");
 
+    data = cleanXML(data);
+
     let $TopicDropdown = $("#topic-dropdown");
     let $TopicTitle = $("#topic");
+    title = parseTitle($(data).find("topic").text());
+    $TopicTitle.text(title);
     displayDropdown(topics, $TopicDropdown, $TopicTitle);
 
     let $SortDropdown = $("#sort-dropdown");
     let $SortTitle = $("#sort-by");
+    title = parseTitle($(data).find("sort").text());
+    $SortTitle.text(title);
     displayDropdown(sorts, $SortDropdown, $SortTitle);
 
     let $KeywordsInput = $("#keywords-input");
