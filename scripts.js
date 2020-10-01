@@ -306,7 +306,7 @@ $(document).ready(function () {
   let requestObject;
 
   if (Object.keys($homepage).length) requestObject = requestsHomepage;
-  else if (Object.keys($pricing).length) requestObject = requestsHomepage;
+  else if (Object.keys($pricing).length) requestObject = requestsPricing;
   else if (Object.keys($courses).length) requestObject = requestsCourses;
 
   for (let r of requestObject) {
