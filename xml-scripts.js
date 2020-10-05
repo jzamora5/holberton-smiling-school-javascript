@@ -323,6 +323,7 @@ $(document).ready(function () {
       type: "GET",
       data: data,
       dataType: "xml",
+      headers: { "Content-Type": "application/xml" },
       success: function (response) {
         displayLoader(false, id);
         callback(response);
