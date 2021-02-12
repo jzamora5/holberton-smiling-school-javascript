@@ -72,6 +72,26 @@ The Holberton Smiling School web pages were developed by sections using the Boot
 
 [Footer](https://github.com/jzamora5/holberton-smiling-school/blob/master/courses.html)
 
+# Challenges and Future Features
+
+This was an interesting project that measure knowledge in HTML, CSS, Bootstrap, JavaScript, and JQuery.
+
+It was challenging because it was born from a Figma design withot specific rules of development.
+
+In the future it would be interesting to change JQuery for React or another more robust JS Framework.
+
 # Author:
 
 Jhoan Zamora: [jzamora5](https://github.com/jzamora5)
+
+# About Myself
+
+🎯 I am a Fullstack developer in love with technology and keen to learn new things everyday. My strenghts reside in Python and JavaScript although I am not afraid to take on any other language.
+
+🎯 I have experience developing both back end and front end. I have used technologies such as Bootstrap, SASS, React, Flask, Django, Express, SQL, MongoDB, AWS, among others.
+
+🎯 I also studied Sound Engineering some years ago, and I love music, videogames, and audiovisual media.
+
+🔹 [LinkedIn](https://www.linkedin.com/in/jhoan-stiven-zamora-caicedo/)
+
+🔹 [Twitter](https://twitter.com/JhoanZamora10)
