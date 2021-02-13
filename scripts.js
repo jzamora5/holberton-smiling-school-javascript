@@ -1,5 +1,11 @@
 $(document).ready(function () {
   //   Quotes ===============================================================
+
+  /**
+   * Creates a carousel item and appends it to the DOM
+   * @data  {Array} List of data to be displayed as Quotes
+   * @return {undefined}  No return
+   */
   function displayQuotes(data) {
     let classItem = "";
     for (let i in data) {
@@ -33,6 +39,12 @@ $(document).ready(function () {
     // END OF displayQuotes
   }
 
+  /**
+   * Modifies to logic of bootstrap carousel in order for
+   * it to move 1 slide at a time
+   * @id  {string} Id of a carousel item slide
+   * @return {undefined}  No return
+   */
   function slideOne(id) {
     $(`#${id} .carousel-item`).each(function () {
       let minPerSlide = 4;
@@ -53,6 +65,11 @@ $(document).ready(function () {
     });
   }
 
+  /**
+   * Creates the string equivalent of a card element in bootstrap
+   * @cardData  {object} An object containing data for creating the card
+   * @return {string}  string equivalent of a card element in bootstrap
+   */
   function createCard(cardData) {
     let starState = "";
     let starString = "";
@@ -112,6 +129,12 @@ $(document).ready(function () {
     // END OF createCard
   }
 
+  /**
+   * Creates cards and attaches them to the DOM in order to display
+   * the Popular Videos section
+   * @data  {Arrray} list of data for creating cards
+   * @return {undefined}  no return
+   */
   function displayPopular(data) {
     let classItem = "";
     for (let i in data) {
@@ -131,6 +154,12 @@ $(document).ready(function () {
     // END OF displayPopular
   }
 
+  /**
+   * Creates cards and attaches them to the DOM in order to display
+   * the Latest Videos section
+   * @data  {Array} list of data for creating cards
+   * @return {undefined}  no return
+   */
   function displayLatest(data) {
     let classItem = "";
     for (let i in data) {
@@ -150,6 +179,12 @@ $(document).ready(function () {
     // END OF displayLatest
   }
 
+  /**
+   * Retrieves the needed data of the search bar in the DOM
+   * the popular section
+   * @return {object}  An object containing the different arguments of search
+   * in lowercase and without spaces
+   */
   function searchObject() {
     let searchObj = {
       q: $("#keywords-input").val(),
@@ -160,6 +195,12 @@ $(document).ready(function () {
     return searchObj;
   }
 
+  /**
+   * Creates cards and attaches them to the DOM in order to display
+   * the popular section
+   * @data  {Array} list of data for creating cards
+   * @return {undefined}  no return
+   */
   function searchRequest() {
     let searchObj = searchObject();
     let $results = $("#results-items");
@@ -171,6 +212,12 @@ $(document).ready(function () {
     }
   }
 
+  /**
+   * Returns title to original condition with corresponding
+   * caps and spaces
+   * @title  {string} title to be parsed
+   * @return {string}  parsed title
+   */
   function parseTitle(title) {
     if (title) {
       title = title.charAt(0).toUpperCase() + title.slice(1).replace("_", " ");
@@ -178,6 +225,13 @@ $(document).ready(function () {
     return title;
   }
 
+  /**
+   * Creates the dropdown menu with the corresponding options from the api
+   * @list  {Array} list of options to be displayed
+   * @$DOMElement  {list} DOM Element to attach the menu to
+   * @$titleElement  {list} corresponding title element in search bar of DOM
+   * @return {undefined}  no return
+   */
   function displayDropdown(list, $DOMElement, $titleElement) {
     if (list.length) {
       for (let l of list) {
@@ -194,6 +248,12 @@ $(document).ready(function () {
     }
   }
 
+  /**
+   * Displays the whole search section in dom
+   * @data  {object} object containing information
+   * about the topics and sort options
+   * @return {undefined} no return
+   */
   function displaySearch(data) {
     let title;
     let topics = data.topics;
@@ -220,6 +280,11 @@ $(document).ready(function () {
     });
   }
 
+  /**
+   * Shows all of the videos, obtained after request to API, in DOM
+   * @data  {object} object containing result from API response
+   * @return {undefined}  no return
+   */
   function displayResults(data) {
     let courses = data.courses;
     if (!courses) return;
@@ -241,12 +306,25 @@ $(document).ready(function () {
     }
   }
 
+  /**
+   * Calls the needed functions in order to correctly display
+   * the search options in dom and results from API response
+   * @data  {data} object containing data from API response
+   * @return {string}  parsed title
+   */
   function displaySearchAndResults(data) {
     displayResults(data);
     displaySearch(data);
     // END OF displayResults
   }
 
+  /**
+   * Function to show loader when waiting for API response
+   * @active  {boolean} indicates whether loader should be displayed or
+   * removed
+   * @id  {string} Id of DOM object to attach loader to
+   * @return {string}  parsed title
+   */
   function displayLoader(active, id) {
     if (active) {
       let $loader = $(`<div class="loader" id="loader-${id}"></div>`);
@@ -259,6 +337,16 @@ $(document).ready(function () {
     // END OF displayLoader
   }
 
+  /**
+   * Function to make GET request to API
+   * @url  {string} url of API endpoint
+   * @callback  {function} callback function to be executed
+   * and that depends on the section of the web page which is being
+   * generated by JS
+   * @id  {string} Value needed to display loader
+   * @data  {object} object to send in API request
+   * @return {string}  parsed title
+   */
   function requestData(url, callback, id, data = {}) {
     displayLoader(true, id);
     $.ajax({
