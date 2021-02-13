@@ -2,6 +2,8 @@
 
 These group of web pages were coded from scratch with the help of the Boostrap Framework and based on some design models given on Figma.
 
+The dynamic generated content was created with the help of jQUERY and JavaScript.
+
 [Figma Homepage](https://www.figma.com/file/QYQqMYbdpAHL5xTclwJKSI/Homepage)
 
 [Figma Pricing](https://www.figma.com/file/KLAI53jdYpfFNEy0O79ymB/Pricing)
@@ -9,6 +11,13 @@ These group of web pages were coded from scratch with the help of the Boostrap F
 [Figma Courses](https://www.figma.com/file/ivg3abH1HLmMayBgjGg1Qf/Courses)
 
 The designs were planned for Desktop, Tablet, and Mobile.
+
+|||
+|--|--|
+|![jQuery](https://sololearnuploads.azureedge.net/uploads/courses/1082.png)|![Bootstrap](https://camo.githubusercontent.com/a664defdd5c2ec93a3fbfb51e0f2aaafa5dc57bf1e13aa47456ced037b3cebe8/68747470733a2f2f676574626f6f7473747261702e636f6d2f646f63732f352e302f6173736574732f6272616e642f626f6f7473747261702d6c6f676f2d736861646f772e706e67)|
+
+
+
 
 # Homepage
 
